@@ -1,0 +1,42 @@
+.test-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .test-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .result-button {
+    background-color: #ffeb3b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    width: 8rem;
+  }
+  .test-info span{
+    font-weight: bold;
+  }
+  
+  .result-button:hover {
+    background-color: #ffeb3b;
+  }
+  @media (min-width: 600px) {
+    .test-result {
+      flex-direction: row; /* Horizontal stacking on larger screens */
+    }
+  
+    .result-button {
+      width: 5rem;
+    }
+  }

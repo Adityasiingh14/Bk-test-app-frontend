@@ -1,19 +1,22 @@
 .home-page {
     text-align: center;
     padding-top: 20px;
-    background-color: #FFF59D;
+    background: linear-gradient(to bottom, #ffeb3b, #ffc107);
     min-height: 100vh;
   }
   
   .home-page img {
-    margin-top: 20px;
+    width: 15rem;
+    height: 10rem;
+    margin-top: 40px;
   }
   
   .start-test-button {
-    background-color: #FFEB3B;
+    background-color: #FFEB3B !important;
     color: #000;
     margin-top: 20px;
     padding: 10px 50px;
     border-radius: 20px;
+    width: 15rem;
   }
   

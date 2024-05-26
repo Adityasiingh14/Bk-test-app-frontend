@@ -1,0 +1,15 @@
+.drawerList {
+    width: 80vw;
+  }
+.drawerLink {
+    text-decoration: none;
+}
+.drawerButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    height: 2rem;
+    width: 2rem;
+    margin: 1rem;
+}
+

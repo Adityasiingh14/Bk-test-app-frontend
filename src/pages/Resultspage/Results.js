@@ -1,35 +1,32 @@
-import React, { useState } from 'react';
-import { Drawer, Button, List, ListItem, ListItemText } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import TestResult from '../../components/testresult/TestResult';
+import './Results.css';
 
-function Results() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-    setIsOpen(open);
-  };
+const ResultsPage = () => {
+  // Sample data for demonstration
+  const testResults = [
+    { testId: '001', testDate: '2024-01-01' },
+    { testId: '002', testDate: '2024-01-02' },
+    { testId: '003', testDate: '2024-01-03' },
+    { testId: '001', testDate: '2024-01-01' },
+    { testId: '002', testDate: '2024-01-02' },
+    { testId: '003', testDate: '2024-01-03' },
+    { testId: '001', testDate: '2024-01-01' },
+    { testId: '002', testDate: '2024-01-02' },
+    { testId: '003', testDate: '2024-01-03' },
+    // Add more test results as needed
+  ];
 
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)}>Open Right Drawer</Button>
-      <Drawer anchor="right" open={isOpen} onClose={toggleDrawer(false)}>
-        <List>
-          <ListItem button component={Link} to="/home">
-            <ListItemText primary="Home" />
-          </ListItem>
-          <ListItem button component={Link} to="/results">
-            <ListItemText primary="Results" />
-          </ListItem>
-          <ListItem button component={Link} to="/profile">
-            <ListItemText primary="Profile" />
-          </ListItem>
-        </List>
-      </Drawer>
+    <div className="results-page">
+      <h1>RESULTS</h1>
+      <div className="results-list">
+        {testResults.map((result) => (
+          <TestResult key={result.testId} testId={result.testId} testDate={result.testDate} />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
-export default Results;
+export default ResultsPage;
