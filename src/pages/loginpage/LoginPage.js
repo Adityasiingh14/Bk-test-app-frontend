@@ -1,68 +1,55 @@
-import { useRef, useState } from "react";
 import { BsFillShieldLockFill, BsTelephoneFill } from "react-icons/bs";
 import { CgSpinner } from "react-icons/cg";
+import ProfileSetup from "../profilesetup/ProfileSetup";
 import OtpInput from "otp-input-react";
+import { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { auth } from "../../firebase-config";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { toast, Toaster } from "react-hot-toast";
-import ReCAPTCHA from 'react-google-recaptcha'
-import { set } from "firebase/database";
 
-const LoginPage = () => {
+const App = () => {
   const [otp, setOtp] = useState("");
   const [ph, setPh] = useState("");
   const [loading, setLoading] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const [user, setUser] = useState(null);
-  const recaptcha = useRef();
 
-  const onCaptchVerify = () => {
-    // if (!window.recaptchaVerifier) {
-    //   window.recaptchaVerifier = new RecaptchaVerifier(
-    //     "recaptcha-container",
-    //     {
-    //       size: "invisible",
-    //       callback: (response) => {
-    //         onSignup();
-    //       },
-    //       "expired-callback": () => {},
-    //     },
-    //     auth
-    //   );
-    // }
-  };
+  function onCaptchVerify() {
+    console.log(auth)
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+        'size': 'invisible',
+        'callback': (response) => {
+          onSignup();
+        }
+      })
+    }
+  }
 
-  const onSignup = () => {
-
+  function onSignup() {
     setLoading(true);
     onCaptchVerify();
 
     const appVerifier = window.recaptchaVerifier;
-    const formatPh = "+" + ph;
 
-    const captchaValue = recaptcha.current.getValue()
-    if(!captchaValue){
-      toast.error("Captcha not verified")
-      setLoading(false);
-      return;
-    }
+    const formatPh = "+" + ph;
 
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
         setLoading(false);
         setShowOTP(true);
-        toast.success("OTP sent successfully!");
+        toast.success("OTP sended successfully!");
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         setLoading(false);
       });
-  };
+  }
 
-  const onOTPVerify = () => {
+  function onOTPVerify() {
     setLoading(true);
     window.confirmationResult
       .confirm(otp)
@@ -72,10 +59,10 @@ const LoginPage = () => {
         setLoading(false);
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
         setLoading(false);
       });
-  };
+  }
 
   return (
     <section className="bg-emerald-500 flex items-center justify-center h-screen">
@@ -83,13 +70,11 @@ const LoginPage = () => {
         <Toaster toastOptions={{ duration: 4000 }} />
         <div id="recaptcha-container"></div>
         {user ? (
-          <h2 className="text-center text-white font-medium text-2xl">
-            👍 Login Success
-          </h2>
+          <ProfileSetup />
         ) : (
           <div className="w-80 flex flex-col gap-4 rounded-lg p-4">
             <h1 className="text-center leading-normal text-white font-medium text-3xl mb-6">
-              OM Shanti!
+              Welcome to <br /> CODE A PROGRAM
             </h1>
             {showOTP ? (
               <>
@@ -109,8 +94,8 @@ const LoginPage = () => {
                   otpType="number"
                   disabled={false}
                   autoFocus
-                  className="opt-container"
-                />
+                  className="opt-container "
+                ></OtpInput>
                 <button
                   onClick={onOTPVerify}
                   className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
@@ -133,7 +118,6 @@ const LoginPage = () => {
                   Verify your phone number
                 </label>
                 <PhoneInput country={"in"} value={ph} onChange={setPh} />
-                <ReCAPTCHA ref={recaptcha} sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY} />
                 <button
                   onClick={onSignup}
                   className="bg-emerald-600 w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
@@ -152,4 +136,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default App;

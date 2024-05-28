@@ -19,7 +19,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
-auth.settings.appVerificationDisabledForTesting = true;
-
-export { auth };
+export const auth = getAuth(app);

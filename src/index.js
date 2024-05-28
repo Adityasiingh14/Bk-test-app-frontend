@@ -12,10 +12,6 @@ function onChange(value) {
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <ReCAPTCHA
-    sitekey='6LdRIOopAAAAABEZlyebz8UQ1B0A37g_IJ_A40ay'
-    onChange={onChange}
-    />
   </React.StrictMode>,
   document.getElementById('root')
 );
